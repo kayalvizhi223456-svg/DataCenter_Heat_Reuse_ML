@@ -1,0 +1,2 @@
+Validation,Split,Training_Samples,Testing_Samples,Training_Facilities,Testing_Facilities,Accuracy,Macro_Precision,Macro_Recall,Macro_F1,High_Precision,High_Recall,High_F1
+Facility_Level,80% Train Facilities / 20% Unseen Test Facilities,101416,25354,14488,3622,0.898832531355999,0.6503063342839974,0.7570256339601982,0.6746442845002808,0.1440329218106996,0.4666666666666667,0.22012578616352202

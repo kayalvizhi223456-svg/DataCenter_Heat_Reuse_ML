@@ -1,0 +1,981 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>
+        Data Center Heat-Reuse Predictor
+    </title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+
+<body>
+
+
+    <!-- =========================================================
+     NAVBAR
+========================================================= -->
+
+    <nav class="navbar">
+
+        <div class="nav-container">
+
+            <div class="logo">
+
+                <div class="logo-icon">
+                    ♨
+                </div>
+
+                <div>
+                    <span class="logo-main">
+                        HeatReuse
+                    </span>
+
+                    <span class="logo-ai">
+                        AI
+                    </span>
+                </div>
+
+            </div>
+
+
+            <div class="nav-status">
+
+                <span class="status-dot"></span>
+
+                <span>
+                    AI Prediction System
+                </span>
+
+            </div>
+
+        </div>
+
+    </nav>
+
+
+
+    <!-- =========================================================
+     MAIN CONTENT
+========================================================= -->
+
+    <main class="main-container">
+
+
+        <!-- HEADER -->
+
+        <section class="hero">
+
+            <div class="hero-badge">
+
+                <span>●</span>
+
+                MACHINE LEARNING POWERED
+
+            </div>
+
+
+            <h1>
+                Data Center
+                <span>Heat-Reuse</span>
+                Predictor
+            </h1>
+
+
+            <p class="hero-description">
+
+                Enter the characteristics of a data center
+                to estimate its heat-reuse suitability using
+                our trained CatBoost machine learning model.
+
+            </p>
+
+        </section>
+
+
+
+        <!-- =====================================================
+         PREDICTION CARD
+    ====================================================== -->
+
+        <section class="prediction-card">
+
+
+            <!-- CARD HEADER -->
+
+            <div class="card-header">
+
+                <div>
+
+                    <h2>
+                        Facility Information
+                    </h2>
+
+                    <p>
+                        Provide the required data center characteristics
+                    </p>
+
+                </div>
+
+
+                <div class="model-badge">
+
+                    <span class="model-dot"></span>
+
+                    CatBoost
+
+                </div>
+
+            </div>
+
+
+
+            <!-- FORM -->
+
+            <form id="predictionForm">
+
+
+                <!-- =================================================
+                 LOCATION INFORMATION
+            ================================================== -->
+
+                <div class="section-title">
+
+                    <div class="section-number">
+                        01
+                    </div>
+
+                    <div>
+
+                        <h3>
+                            Location & Facility
+                        </h3>
+
+                        <p>
+                            Basic information about the facility
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="form-grid">
+
+
+                    <!-- YEAR -->
+
+                    <div class="form-group">
+
+                        <label for="year">
+
+                            Year
+
+                            <span class="required">
+                                *
+                            </span>
+
+                        </label>
+
+                        <input type="number" id="year" name="Year" min="2019" max="2025" value="2025" required>
+
+                        <small>
+                            Dataset range: 2019–2025
+                        </small>
+
+                    </div>
+
+
+
+                    <!-- COUNTRY -->
+
+                    <div class="form-group">
+
+                        <label for="country">
+
+                            Country
+
+                            <span class="required">
+                                *
+                            </span>
+
+                        </label>
+
+                        <input type="text" id="country" name="Country" placeholder="e.g. India" required>
+
+                    </div>
+
+
+
+                    <!-- CITY -->
+
+                    <div class="form-group">
+
+                        <label for="city">
+
+                            City
+
+                            <span class="required">
+                                *
+                            </span>
+
+                        </label>
+
+                        <input type="text" id="city" name="City" placeholder="e.g. Chennai" required>
+
+                    </div>
+
+
+
+                    <!-- FACILITY TYPE -->
+
+                    <div class="form-group">
+
+                        <label for="facility_type">
+
+                            Facility Type
+
+                            <span class="required">
+                                *
+                            </span>
+
+                        </label>
+
+                        <select id="facility_type" name="Facility_Type" required>
+
+                            <option value="">
+                                Select facility type
+                            </option>
+
+                            <option value="Hyperscale">
+                                Hyperscale
+                            </option>
+
+                            <option value="Enterprise">
+                                Enterprise
+                            </option>
+
+                            <option value="Colocation">
+                                Colocation
+                            </option>
+
+                            <option value="Edge">
+                                Edge
+                            </option>
+
+                            <option value="Other">
+                                Other
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- =================================================
+                 RESOURCE INFORMATION
+            ================================================== -->
+
+                <div class="section-title resource-section">
+
+                    <div class="section-number">
+                        02
+                    </div>
+
+                    <div>
+
+                        <h3>
+                            Resource Characteristics
+                        </h3>
+
+                        <p>
+                            Water and electricity usage information
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="form-grid">
+
+
+                    <!-- WUE -->
+
+                    <div class="form-group">
+
+                        <label for="wue">
+
+                            Water Usage Effectiveness
+
+                            <span class="required">
+                                *
+                            </span>
+
+                        </label>
+
+                        <div class="input-with-unit">
+
+                            <input type="number" id="wue" name="WUE_L_per_kWh" placeholder="e.g. 0.8" min="0"
+                                step="0.001" required>
+
+                            <span class="unit">
+                                L/kWh
+                            </span>
+
+                        </div>
+
+                        <small>
+                            Water consumed per kWh of energy
+                        </small>
+
+                    </div>
+
+
+
+                    <!-- ELECTRICITY -->
+
+                    <div class="form-group">
+
+                        <label for="electricity">
+
+                            Daily Electricity Usage
+
+                            <span class="required">
+                                *
+                            </span>
+
+                        </label>
+
+                        <div class="input-with-unit">
+
+                            <input type="number" id="electricity" name="Daily_Electricity_Usage_MWh"
+                                placeholder="e.g. 500" min="0" step="0.01" required>
+
+                            <span class="unit">
+                                MWh/day
+                            </span>
+
+                        </div>
+
+                        <small>
+                            Daily electricity consumption
+                        </small>
+
+                    </div>
+
+
+
+                    <!-- WATER -->
+
+                    <div class="form-group">
+
+                        <label for="water">
+
+                            Daily Water Usage
+
+                            <span class="required">
+                                *
+                            </span>
+
+                        </label>
+
+                        <div class="input-with-unit">
+
+                            <input type="number" id="water" name="Daily_Water_Usage_Gallons" placeholder="e.g. 100000"
+                                min="0" step="0.01" required>
+
+                            <span class="unit">
+                                gal/day
+                            </span>
+
+                        </div>
+
+                        <small>
+                            Daily water consumption
+                        </small>
+
+                    </div>
+
+
+
+                    <!-- WATER STRESS -->
+
+                    <div class="form-group">
+
+                        <label for="water_stress">
+
+                            Surrounding Water Stress
+
+                            <span class="required">
+                                *
+                            </span>
+
+                        </label>
+
+                        <select id="water_stress" name="Surrounding_Water_Stress_Tier" required>
+
+                            <option value="">
+                                Select water stress
+                            </option>
+
+                            <option value="Low">
+                                Low
+                            </option>
+
+                            <option value="Medium">
+                                Medium
+                            </option>
+
+                            <option value="High">
+                                High
+                            </option>
+
+                        </select>
+
+                        <small>
+                            Local water-stress classification
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- =================================================
+                 PREDICT BUTTON
+            ================================================== -->
+
+                <div class="submit-area">
+
+                    <button type="submit" id="predictButton" class="predict-button">
+
+                        <span id="buttonText">
+                            Predict Suitability
+                        </span>
+
+                        <span id="buttonLoader" class="button-loader"></span>
+
+                        <span class="button-arrow">
+                            →
+                        </span>
+
+                    </button>
+
+                </div>
+
+
+            </form>
+
+
+
+            <!-- =====================================================
+             RESULT
+        ====================================================== -->
+
+            <div id="resultBox" class="result-box">
+
+
+                <div class="result-header">
+
+                    <div>
+
+                        <span class="result-label">
+                            PREDICTION RESULT
+                        </span>
+
+                        <h2 id="resultCategory">
+                            —
+                        </h2>
+
+                    </div>
+
+
+                    <div id="resultIcon" class="result-icon">
+                        ♨
+                    </div>
+
+                </div>
+
+
+
+                <!-- CONFIDENCE -->
+
+                <div class="confidence-section">
+
+                    <div class="confidence-header">
+
+                        <span>
+                            Model Confidence
+                        </span>
+
+                        <strong id="confidenceValue">
+                            0%
+                        </strong>
+
+                    </div>
+
+
+                    <div class="confidence-bar">
+
+                        <div id="confidenceFill" class="confidence-fill"></div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- CLASS PROBABILITIES -->
+
+                <div id="probabilitySection" class="probability-section">
+
+                    <h3>
+                        Class Probabilities
+                    </h3>
+
+
+                    <div class="probability-grid">
+
+
+                        <div class="probability-item">
+
+                            <div class="probability-name">
+
+                                <span class="probability-dot low"></span>
+
+                                Low
+
+                            </div>
+
+                            <strong id="lowProbability">
+                                0%
+                            </strong>
+
+                        </div>
+
+
+
+                        <div class="probability-item">
+
+                            <div class="probability-name">
+
+                                <span class="probability-dot medium"></span>
+
+                                Medium
+
+                            </div>
+
+                            <strong id="mediumProbability">
+                                0%
+                            </strong>
+
+                        </div>
+
+
+
+                        <div class="probability-item">
+
+                            <div class="probability-name">
+
+                                <span class="probability-dot high"></span>
+
+                                High
+
+                            </div>
+
+                            <strong id="highProbability">
+                                0%
+                            </strong>
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- RESULT DESCRIPTION -->
+
+                <div id="resultDescription" class="result-description"></div>
+
+
+            </div>
+
+
+
+            <!-- =====================================================
+             DISCLAIMER
+        ====================================================== -->
+
+            <div class="disclaimer">
+
+                <div class="disclaimer-icon">
+                    !
+                </div>
+
+                <div>
+
+                    <strong>
+                        Important Note
+                    </strong>
+
+                    <p>
+
+                        This prediction represents the suitability
+                        category defined by the project's heat-reuse
+                        framework. It is not a direct measurement of
+                        recoverable heat or actual heat-recovery
+                        potential.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+
+        </section>
+
+
+    </main>
+
+
+
+    <!-- =========================================================
+     FOOTER
+========================================================= -->
+
+    <footer>
+
+        <p>
+            Data Center Heat-Reuse Suitability Prediction
+            Using Machine Learning
+        </p>
+
+        <span>
+            CatBoost • Machine Learning • Data Science
+        </span>
+
+    </footer>
+
+
+
+    <!-- =========================================================
+     JAVASCRIPT
+========================================================= -->
+
+    <script>
+
+
+        const predictionForm =
+            document.getElementById("predictionForm");
+
+        const predictButton =
+            document.getElementById("predictButton");
+
+        const buttonText =
+            document.getElementById("buttonText");
+
+        const buttonLoader =
+            document.getElementById("buttonLoader");
+
+        const resultBox =
+            document.getElementById("resultBox");
+
+        const resultCategory =
+            document.getElementById("resultCategory");
+
+        const confidenceValue =
+            document.getElementById("confidenceValue");
+
+        const confidenceFill =
+            document.getElementById("confidenceFill");
+
+        const resultDescription =
+            document.getElementById("resultDescription");
+
+
+
+        /* =========================================================
+           FORM SUBMISSION
+        ========================================================= */
+
+        predictionForm.addEventListener(
+            "submit",
+            async function (event) {
+
+                event.preventDefault();
+
+
+                /* -----------------------------------------------
+                   SHOW LOADING
+                ------------------------------------------------ */
+
+                predictButton.disabled = true;
+
+                buttonText.textContent =
+                    "Analyzing...";
+
+                buttonLoader.style.display =
+                    "inline-block";
+
+
+
+                /* -----------------------------------------------
+                   COLLECT FORM DATA
+                ------------------------------------------------ */
+
+                const data = {
+
+                    Year:
+                        parseInt(
+                            document.getElementById("year").value
+                        ),
+
+                    Country:
+                        document.getElementById("country").value,
+
+                    City:
+                        document.getElementById("city").value,
+
+                    Facility_Type:
+                        document.getElementById("facility_type").value,
+
+                    WUE_L_per_kWh:
+                        parseFloat(
+                            document.getElementById("wue").value
+                        ),
+
+                    Daily_Electricity_Usage_MWh:
+                        parseFloat(
+                            document.getElementById("electricity").value
+                        ),
+
+                    Daily_Water_Usage_Gallons:
+                        parseFloat(
+                            document.getElementById("water").value
+                        ),
+
+                    Surrounding_Water_Stress_Tier:
+                        document.getElementById("water_stress").value
+
+                };
+
+
+
+                /* -----------------------------------------------
+                   SEND DATA TO FLASK
+                ------------------------------------------------ */
+
+                try {
+
+                    const response =
+                        await fetch("/predict", {
+
+                            method: "POST",
+
+                            headers: {
+                                "Content-Type":
+                                    "application/json"
+                            },
+
+                            body:
+                                JSON.stringify(data)
+
+                        });
+
+
+
+                    const result =
+                        await response.json();
+
+
+
+                    /* -------------------------------------------
+                       ERROR
+                    -------------------------------------------- */
+
+                    if (!result.success) {
+
+                        throw new Error(
+                            result.error ||
+                            "Prediction failed."
+                        );
+
+                    }
+
+
+
+                    /* -------------------------------------------
+                       DISPLAY RESULT
+                    -------------------------------------------- */
+
+                    const category =
+                        result.prediction;
+
+                    const confidence =
+                        result.confidence;
+
+
+
+                    resultCategory.textContent =
+                        category;
+
+                    confidenceValue.textContent =
+                        confidence + "%";
+
+                    confidenceFill.style.width =
+                        confidence + "%";
+
+
+
+                    /* -------------------------------------------
+                       RESULT COLOR CLASS
+                    -------------------------------------------- */
+
+                    resultBox.classList.remove(
+                        "result-low",
+                        "result-medium",
+                        "result-high"
+                    );
+
+
+                    if (category === "Low") {
+
+                        resultBox.classList.add(
+                            "result-low"
+                        );
+
+                        resultDescription.innerHTML =
+                            "<strong>Low Suitability:</strong> " +
+                            "The facility characteristics correspond " +
+                            "to the Low category under the project's " +
+                            "heat-reuse suitability framework.";
+
+                    }
+
+                    else if (category === "Medium") {
+
+                        resultBox.classList.add(
+                            "result-medium"
+                        );
+
+                        resultDescription.innerHTML =
+                            "<strong>Medium Suitability:</strong> " +
+                            "The facility characteristics correspond " +
+                            "to the Medium category under the project's " +
+                            "heat-reuse suitability framework.";
+
+                    }
+
+                    else if (category === "High") {
+
+                        resultBox.classList.add(
+                            "result-high"
+                        );
+
+                        resultDescription.innerHTML =
+                            "<strong>High Suitability:</strong> " +
+                            "The facility characteristics correspond " +
+                            "to the High category under the project's " +
+                            "heat-reuse suitability framework.";
+
+                    }
+
+
+
+                    /* -------------------------------------------
+                       PROBABILITIES
+                    -------------------------------------------- */
+
+                    const probabilities =
+                        result.probabilities || {};
+
+
+                    document.getElementById(
+                        "lowProbability"
+                    ).textContent =
+                        (probabilities.Low || 0) + "%";
+
+
+                    document.getElementById(
+                        "mediumProbability"
+                    ).textContent =
+                        (probabilities.Medium || 0) + "%";
+
+
+                    document.getElementById(
+                        "highProbability"
+                    ).textContent =
+                        (probabilities.High || 0) + "%";
+
+
+
+                    /* -------------------------------------------
+                       SHOW RESULT
+                    -------------------------------------------- */
+
+                    resultBox.classList.add(
+                        "show-result"
+                    );
+
+
+                    resultBox.scrollIntoView({
+                        behavior: "smooth",
+                        block: "center"
+                    });
+
+
+                }
+
+                catch (error) {
+
+                    alert(
+                        "Prediction Error: " +
+                        error.message
+                    );
+
+                    console.error(error);
+
+                }
+
+
+                /* -----------------------------------------------
+                   RESET BUTTON
+                ------------------------------------------------ */
+
+                predictButton.disabled = false;
+
+                buttonText.textContent =
+                    "Predict Suitability";
+
+                buttonLoader.style.display =
+                    "none";
+
+            }
+
+        );
+
+
+    </script>
+
+
+</body>
+
+</html>
