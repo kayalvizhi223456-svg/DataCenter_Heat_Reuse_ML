@@ -11,7 +11,7 @@ app = Flask(__name__)
 # ============================================================
 
 MODEL_PATH = os.path.join(
-    os.path.dirname(os.path.dirname(__file__)),
+    os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
     "models",
     "catboost_heat_reuse_model.cbm"
 )
@@ -97,6 +97,7 @@ def predict():
 
         # CatBoost returns something like:
         # [['Medium']]
+
         predicted_class = str(prediction[0][0])
 
         # Highest probability
@@ -147,8 +148,10 @@ def predict():
 
 if __name__ == "__main__":
 
+    port = int(os.environ.get("PORT", 5000))
+
     app.run(
-        host="127.0.0.1",
-        port=5000,
+        host="0.0.0.0",
+        port=port,
         debug=True
     )
